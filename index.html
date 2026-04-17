@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陈阿美的餐馆 · May's Restaurant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Noto+Serif+SC:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            /* Dark homepage — shades of gray, not pure black */
+            --bg-0:        #0E0E0E;
+            --bg-1:        #141414;
+            --bg-2:        #1C1C1C;
+            --bg-3:        #242424;
+            --bg-4:        #2E2E2E;
+
+            /* Ivory menu page */
+            --ivory-0:     #F3EDE2;
+            --ivory-1:     #EDE6D8;
+            --ivory-2:     #E3DBC9;
+
+            /* Accents */
+            --red:         #C41E2A;
+            --red-dark:    #9A141D;
+
+            /* Type */
+            --white:       #FFFFFF;
+            --white-70:    rgba(255,255,255,0.70);
+            --white-45:    rgba(255,255,255,0.45);
+            --white-20:    rgba(255,255,255,0.18);
+            --ink:         #1A1410;
+            --ink-60:      rgba(26,20,16,0.62);
+            --ink-30:      rgba(26,20,16,0.28);
+            --line-dark:   rgba(255,255,255,0.10);
+            --line-light:  rgba(26,20,16,0.14);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-0);
+            color: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─────────────────────────────────────────
+           NAV
+        ───────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 48px;
+            transition: background 0.4s, border-color 0.4s, padding 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(14, 14, 14, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-color: var(--line-dark);
+            padding: 16px 48px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .logo-wrap { display: flex; flex-direction: column; line-height: 1.1; }
+
+        .logo-name {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 0.04em;
+        }
+
+        .logo-en {
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: var(--white-45);
+            margin-top: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 38px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white-70);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .cart-icon {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--line-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-70);
+            text-decoration: none;
+            font-size: 14px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .cart-icon:hover { border-color: var(--white); color: var(--white); }
+
+        .cart-icon::after {
+            content: '0';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--red);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-red {
+            background: var(--red);
+            color: #fff;
+            padding: 11px 24px;
+            font-size: 11.5px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            display: inline-block;
+        }
+
+        .btn-red:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+        /* ─────────────────────────────────────────
+           HERO — DARK COLLAGE
+        ───────────────────────────────────────── */
+        .hero {
+            position: relative;
+            min-height: 420px;
+            padding: 92px 92px 52px 56px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            overflow: hidden;
+            background: var(--bg-0);
+        }
+
+        /* Full-bleed background image */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.45) saturate(1.05);
+        }
+
+        /* Dark overlay so copy stays legible — gradient from bottom-left */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(95deg, rgba(14,14,14,0.82) 0%, rgba(14,14,14,0.55) 45%, rgba(14,14,14,0.25) 100%),
+                linear-gradient(to top, rgba(14,14,14,0.75) 0%, rgba(14,14,14,0.1) 60%);
+            pointer-events: none;
+        }
+
+        /* Bottom-left overlay (Wokizai-style) */
+        .hero-overlay {
+            position: relative;
+            z-index: 2;
+            max-width: 560px;
+        }
+
+        .hero-tagline {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(20px, 2.1vw, 30px);
+            font-weight: 400;
+            line-height: 1.3;
+            color: var(--white);
+            margin-bottom: 24px;
+            letter-spacing: -0.005em;
+        }
+
+        /* Giant decorative text band below hero */
+        .mega-strip {
+            background: var(--bg-0);
+            padding: 28px 0 38px;
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--line-dark);
+        }
+
+        .mega-text {
+            display: inline-block;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(72px, 12vw, 180px);
+            font-weight: 700;
+            line-height: 1;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            padding-left: 56px;
+        }
+
+        /* Red vertical banner (like Wokizai signature) */
+        .hero-banner {
+            position: absolute;
+            right: 28px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 5;
+            background: var(--red);
+            padding: 30px 12px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 28px rgba(196, 30, 42, 0.32);
+        }
+
+        .hero-banner-text {
+            writing-mode: vertical-rl;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.96);
+            letter-spacing: 0.38em;
+        }
+
+        /* ─────────────────────────────────────────
+           STATS STRIP
+        ───────────────────────────────────────── */
+        /* ─────────────────────────────────────────
+           MENU — IVORY SECTION
+        ───────────────────────────────────────── */
+        .menu {
+            background: var(--ivory-0);
+            color: var(--ink);
+            padding: 72px 48px 110px;
+            position: relative;
+        }
+
+        /* Category tabs — ivory */
+        .menu-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px;
+            padding: 6px;
+            background: var(--ivory-1);
+            border: 1px solid var(--ink-30);
+            border-radius: 999px;
+            max-width: 1100px;
+            margin: 0 auto 72px;
+        }
+
+        .menu-tab {
+            padding: 11px 22px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-60);
+            border: none;
+            background: transparent;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+            white-space: nowrap;
+        }
+
+        .menu-tab:hover { color: var(--ink); }
+
+        .menu-tab.active {
+            background: var(--ink);
+            color: var(--ivory-0);
+        }
+
+        /* Menu panels */
+        .menu-panel {
+            display: none;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .menu-panel.active { display: block; animation: fade 0.35s ease; }
+
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        .menu-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 72px;
+        }
+
+        /* Sub-category heading within the All panel */
+        .cat-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--red);
+            margin: 40px 0 4px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--ink-30);
+            letter-spacing: -0.01em;
+        }
+
+        .cat-heading:first-child { margin-top: 0; }
+
+        .menu-row {
+            display: grid;
+            grid-template-columns: 36px 1fr auto;
+            align-items: baseline;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 1px dashed var(--ink-30);
+        }
+
+        .menu-row:last-child { border-bottom: none; }
+
+        .menu-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            font-style: italic;
+            color: var(--red);
+            opacity: 0.7;
+        }
+
+        .menu-dish {
+            min-width: 0;
+        }
+
+        .menu-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.005em;
+        }
+
+        .menu-name .cn {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 13px;
+            color: var(--ink-60);
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .menu-note {
+            font-size: 12px;
+            color: var(--ink-60);
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        .menu-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .menu-foot {
+            margin-top: 72px;
+            text-align: center;
+        }
+
+        .menu-foot-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: var(--ink-60);
+            margin-bottom: 20px;
+        }
+
+        /* ─────────────────────────────────────────
+           FOOTER
+        ───────────────────────────────────────── */
+        footer {
+            background: var(--bg-0);
+            padding: 72px 48px 36px;
+            border-top: 1px solid var(--line-dark);
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 52px;
+            padding-bottom: 44px;
+            border-bottom: 1px solid var(--line-dark);
+            margin-bottom: 28px;
+        }
+
+        .foot-brand {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 18px;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .foot-brand-en {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.04em;
+            margin-bottom: 14px;
+        }
+
+        .foot-desc {
+            font-size: 13.5px;
+            color: var(--white-45);
+            line-height: 1.75;
+            max-width: 280px;
+        }
+
+        .foot-h {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: var(--white-70);
+            margin-bottom: 20px;
+        }
+
+        .foot-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .foot-list a {
+            color: var(--white-45);
+            font-size: 13.5px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .foot-list a:hover { color: var(--white); }
+
+        .foot-bot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .foot-copy {
+            font-size: 12px;
+            color: rgba(255,255,255,0.22);
+        }
+
+        .foot-red { color: var(--red); font-size: 12px; letter-spacing: 0.06em; }
+
+        /* ─────────────────────────────────────────
+           REVEAL
+        ───────────────────────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+        .reveal.in { opacity: 1; transform: none; }
+        .reveal.d1 { transition-delay: .1s; }
+        .reveal.d2 { transition-delay: .2s; }
+
+        /* ─────────────────────────────────────────
+           RESPONSIVE
+        ───────────────────────────────────────── */
+        @media (max-width: 960px) {
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+            .hero { padding: 88px 24px 48px; min-height: 340px; }
+            .menu { padding: 72px 24px; }
+            .menu-columns { grid-template-columns: 1fr; column-gap: 0; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+    <a href="#" class="logo">
+        <span class="logo-mark">美</span>
+        <div class="logo-wrap">
+            <span class="logo-name">陈阿美的餐馆</span>
+            <span class="logo-en">May's Restaurant</span>
+        </div>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+        <a href="#" class="cart-icon" aria-label="Cart">🛒</a>
+        <a href="#" class="btn-red">Book a Table</a>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+    <!-- SWAP THIS IMAGE: replace src with your own food photo URL or local path (e.g. images/hero.jpg) -->
+    <div class="hero-bg">
+        <img src="https://loremflickr.com/1800/900/noodles,bowl,dish/all?lock=7" alt="">
+    </div>
+
+    <div class="hero-overlay reveal">
+        <p class="hero-tagline">A contemporary take on classic Chinese cuisine,<br>crafted with heart and tradition.</p>
+        <a href="#" class="btn-red">Book a Table</a>
+    </div>
+
+    <!-- Red vertical banner -->
+    <div class="hero-banner">
+        <span class="hero-banner-text">陈阿美的餐馆</span>
+    </div>
+</section>
+
+<!-- ── GIANT DECORATIVE STRIP ── -->
+<div class="mega-strip">
+    <span class="mega-text">Flavors of China&nbsp;·&nbsp;May's Restaurant&nbsp;·&nbsp;</span>
+</div>
+
+<!-- ── MENU (IVORY) ── -->
+<section class="menu" id="menu">
+    <!-- TABS -->
+    <div class="menu-tabs reveal d1" role="tablist">
+        <button class="menu-tab active" data-tab="all">All</button>
+        <button class="menu-tab" data-tab="appetizers">Appetizers</button>
+        <button class="menu-tab" data-tab="soup">Soup</button>
+        <button class="menu-tab" data-tab="chicken">Chicken</button>
+        <button class="menu-tab" data-tab="pork">Pork</button>
+        <button class="menu-tab" data-tab="beef">Beef</button>
+        <button class="menu-tab" data-tab="seafood">Seafood</button>
+        <button class="menu-tab" data-tab="noodles">Noodles &amp; Rice</button>
+        <button class="menu-tab" data-tab="vegetables">Vegetables</button>
+        <button class="menu-tab" data-tab="specials">Chef's Specials</button>
+        <button class="menu-tab" data-tab="lunch">Lunch Specials</button>
+    </div>
+
+    <!-- PANELS -->
+    <!-- ALL -->
+    <div class="menu-panel active" data-panel="all">
+        <div class="menu-columns">
+            <!-- Column 1 -->
+            <div>
+                <h3 class="cat-heading">Appetizers</h3>
+                <div class="menu-row"><div class="menu-num">01</div><div class="menu-dish"><div class="menu-name">Egg Roll</div><div class="menu-note">Single serving</div></div><div class="menu-price">$1.95</div></div>
+                <div class="menu-row"><div class="menu-num">02</div><div class="menu-dish"><div class="menu-name">Vegetable Spring Roll</div><div class="menu-note">Single serving</div></div><div class="menu-price">$1.95</div></div>
+                <div class="menu-row"><div class="menu-num">03</div><div class="menu-dish"><div class="menu-name">Shrimp Tempura</div><div class="menu-note">5 pieces</div></div><div class="menu-price">$6.95</div></div>
+                <div class="menu-row"><div class="menu-num">04</div><div class="menu-dish"><div class="menu-name">Fried Wonton</div><div class="menu-note">6 pieces</div></div><div class="menu-price">$5.95</div></div>
+                <div class="menu-row"><div class="menu-num">05</div><div class="menu-dish"><div class="menu-name">Crab Rangoon</div><div class="menu-note">6 pieces</div></div><div class="menu-price">$6.95</div></div>
+                <div class="menu-row"><div class="menu-num">06</div><div class="menu-dish"><div class="menu-name">BBQ Spare Ribs</div><div class="menu-note">4 pieces</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">07</div><div class="menu-dish"><div class="menu-name">BBQ Roast Pork</div></div><div class="menu-price">$7.95</div></div>
+                <div class="menu-row"><div class="menu-num">08</div><div class="menu-dish"><div class="menu-name">Beef on the Sticks</div><div class="menu-note">4 pieces</div></div><div class="menu-price">$7.95</div></div>
+                <div class="menu-row"><div class="menu-num">08</div><div class="menu-dish"><div class="menu-name">Chicken on the Sticks</div><div class="menu-note">4 pieces</div></div><div class="menu-price">$7.95</div></div>
+                <div class="menu-row"><div class="menu-num">09</div><div class="menu-dish"><div class="menu-name">Steamed Meat Dumplings</div><div class="menu-note">8 pieces</div></div><div class="menu-price">$7.95</div></div>
+                <div class="menu-row"><div class="menu-num">09</div><div class="menu-dish"><div class="menu-name">Pan Fried Meat Dumplings</div><div class="menu-note">8 pieces</div></div><div class="menu-price">$7.95</div></div>
+                <div class="menu-row"><div class="menu-num">10</div><div class="menu-dish"><div class="menu-name">Pu Pu Platter</div><div class="menu-note">For 2 · sampler feast</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">11</div><div class="menu-dish"><div class="menu-name">Steamed Chicken Dumplings</div><div class="menu-note">6 pieces</div></div><div class="menu-price">$6.95</div></div>
+                <div class="menu-row"><div class="menu-num">11</div><div class="menu-dish"><div class="menu-name">Fried Chicken Dumplings</div><div class="menu-note">6 pieces</div></div><div class="menu-price">$6.95</div></div>
+                <div class="menu-row"><div class="menu-num">12</div><div class="menu-dish"><div class="menu-name">Shrimp Toast</div><div class="menu-note">4 pieces</div></div><div class="menu-price">$6.45</div></div>
+                <div class="menu-row"><div class="menu-num">13</div><div class="menu-dish"><div class="menu-name">French Fries</div></div><div class="menu-price">$3.29</div></div>
+
+                <h3 class="cat-heading">Soup</h3>
+                <div class="menu-row"><div class="menu-num">21</div><div class="menu-dish"><div class="menu-name">Wonton Soup</div></div><div class="menu-price">$2.95</div></div>
+                <div class="menu-row"><div class="menu-num">22</div><div class="menu-dish"><div class="menu-name">Egg Drop Soup</div></div><div class="menu-price">$2.95</div></div>
+                <div class="menu-row"><div class="menu-num">23</div><div class="menu-dish"><div class="menu-name">Hot &amp; Sour Soup</div></div><div class="menu-price">$2.95</div></div>
+                <div class="menu-row"><div class="menu-num">24</div><div class="menu-dish"><div class="menu-name">Chicken with Corn Soup</div></div><div class="menu-price">$6.95</div></div>
+                <div class="menu-row"><div class="menu-num">25</div><div class="menu-dish"><div class="menu-name">Vegetable Soup</div></div><div class="menu-price">$6.45</div></div>
+                <div class="menu-row"><div class="menu-num">26</div><div class="menu-dish"><div class="menu-name">Seafood Soup</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">27</div><div class="menu-dish"><div class="menu-name">Triple Delight Soup</div></div><div class="menu-price">$8.45</div></div>
+                <div class="menu-row"><div class="menu-num">28</div><div class="menu-dish"><div class="menu-name">Noodle Soup</div></div><div class="menu-price">$8.45</div></div>
+
+                <h3 class="cat-heading">Chicken</h3>
+                <div class="menu-row"><div class="menu-num">30</div><div class="menu-dish"><div class="menu-name">Chicken with Broccoli</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">31</div><div class="menu-dish"><div class="menu-name">Chicken with Mixed Vegetable</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">32</div><div class="menu-dish"><div class="menu-name">Chicken with Garlic Sauce</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">33</div><div class="menu-dish"><div class="menu-name">Chicken with Snow Peas</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">34</div><div class="menu-dish"><div class="menu-name">Chicken with Cashew Nuts</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">35</div><div class="menu-dish"><div class="menu-name">Chicken with Black Bean Sauce</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">36</div><div class="menu-dish"><div class="menu-name">Hunan Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">37</div><div class="menu-dish"><div class="menu-name">Szechuan Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">38</div><div class="menu-dish"><div class="menu-name">Kung Pao Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">39</div><div class="menu-dish"><div class="menu-name">Moo Goo Gai Pan</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">40</div><div class="menu-dish"><div class="menu-name">Chicken with String Beans</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">41</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">42</div><div class="menu-dish"><div class="menu-name">Lemon Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">43</div><div class="menu-dish"><div class="menu-name">Curry Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">44</div><div class="menu-dish"><div class="menu-name">Moo Shu Chicken</div></div><div class="menu-price">$12.49</div></div>
+
+                <h3 class="cat-heading">Pork</h3>
+                <div class="menu-row"><div class="menu-num">45</div><div class="menu-dish"><div class="menu-name">Roast Pork with Broccoli</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">46</div><div class="menu-dish"><div class="menu-name">Roast Pork with Mixed Vegetable</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">47</div><div class="menu-dish"><div class="menu-name">Shredded Pork with Garlic Sauce</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">48</div><div class="menu-dish"><div class="menu-name">Roast Pork with Snow Peas</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">49</div><div class="menu-dish"><div class="menu-name">Hunan Pork</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">50</div><div class="menu-dish"><div class="menu-name">Twice Cooked Pork</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">51</div><div class="menu-dish"><div class="menu-name">Pork with String Beans</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">52</div><div class="menu-dish"><div class="menu-name">Sweet and Sour Pork</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">53</div><div class="menu-dish"><div class="menu-name">Moo Shu Pork</div></div><div class="menu-price">$12.49</div></div>
+
+                <h3 class="cat-heading">Beef</h3>
+                <div class="menu-row"><div class="menu-num">54</div><div class="menu-dish"><div class="menu-name">Beef with Broccoli</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">55</div><div class="menu-dish"><div class="menu-name">Beef with Mixed Vegetables</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">56</div><div class="menu-dish"><div class="menu-name">Beef with Garlic Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">57</div><div class="menu-dish"><div class="menu-name">Beef with Snow Peas</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">58</div><div class="menu-dish"><div class="menu-name">Hunan Beef</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">59</div><div class="menu-dish"><div class="menu-name">Beef with String Bean</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">60</div><div class="menu-dish"><div class="menu-name">Beef with Oyster Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">61</div><div class="menu-dish"><div class="menu-name">Beef Szechuan Style</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">62</div><div class="menu-dish"><div class="menu-name">Kung Pao Beef</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">63</div><div class="menu-dish"><div class="menu-name">Pepper Steak with Onion</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">64</div><div class="menu-dish"><div class="menu-name">Mongolian Beef</div></div><div class="menu-price">$13.45</div></div>
+                <div class="menu-row"><div class="menu-num">65</div><div class="menu-dish"><div class="menu-name">Beef with Black Bean Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">66</div><div class="menu-dish"><div class="menu-name">Curry Beef</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">67</div><div class="menu-dish"><div class="menu-name">Moo Shu Beef</div></div><div class="menu-price">$13.95</div></div>
+            </div>
+
+            <!-- Column 2 -->
+            <div>
+                <h3 class="cat-heading">Seafood</h3>
+                <div class="menu-row"><div class="menu-num">68</div><div class="menu-dish"><div class="menu-name">Shrimp with Broccoli</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">69</div><div class="menu-dish"><div class="menu-name">Shrimp with Mixed Vegetable</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">70</div><div class="menu-dish"><div class="menu-name">Shrimp with Garlic Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">71</div><div class="menu-dish"><div class="menu-name">Shrimp with Snow Peas</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">72</div><div class="menu-dish"><div class="menu-name">Hunan Shrimp</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">73</div><div class="menu-dish"><div class="menu-name">Shrimp with String Bean</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">74</div><div class="menu-dish"><div class="menu-name">Kung Pao Shrimp</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">75</div><div class="menu-dish"><div class="menu-name">Shrimp with Lobster Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">76</div><div class="menu-dish"><div class="menu-name">Shrimp with Cashew Nuts</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">77</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Shrimp</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">78</div><div class="menu-dish"><div class="menu-name">Shrimp with Black Bean Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">79</div><div class="menu-dish"><div class="menu-name">Shrimp Szechuan Style</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">80</div><div class="menu-dish"><div class="menu-name">Curry Shrimp</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">81</div><div class="menu-dish"><div class="menu-name">Moo Shu Shrimp</div></div><div class="menu-price">$13.95</div></div>
+                <div class="menu-row"><div class="menu-num">82</div><div class="menu-dish"><div class="menu-name">Kung Pao Scallops</div></div><div class="menu-price">$16.95</div></div>
+                <div class="menu-row"><div class="menu-num">83</div><div class="menu-dish"><div class="menu-name">Scallops with Garlic Sauce</div></div><div class="menu-price">$16.95</div></div>
+
+                <h3 class="cat-heading">Noodles &amp; Rice</h3>
+                <div class="menu-row"><div class="menu-num">87</div><div class="menu-dish"><div class="menu-name">Vegetable Lo Mein</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">88</div><div class="menu-dish"><div class="menu-name">Roast Pork Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">89</div><div class="menu-dish"><div class="menu-name">Chicken Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">90</div><div class="menu-dish"><div class="menu-name">Beef Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">91</div><div class="menu-dish"><div class="menu-name">Shrimp Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">92</div><div class="menu-dish"><div class="menu-name">Combination Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">93</div><div class="menu-dish"><div class="menu-name">Chow Fun</div></div><div class="menu-price">$10.75</div></div>
+                <div class="menu-row"><div class="menu-num">94</div><div class="menu-dish"><div class="menu-name">Rice Noodle</div></div><div class="menu-price">$10.75</div></div>
+                <div class="menu-row"><div class="menu-num">95</div><div class="menu-dish"><div class="menu-name">Singapore Style Noodle</div><div class="menu-note">with mild curry</div></div><div class="menu-price">$10.75</div></div>
+                <div class="menu-row"><div class="menu-num">96</div><div class="menu-dish"><div class="menu-name">Vegetable Fried Rice</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">97</div><div class="menu-dish"><div class="menu-name">Roast Pork Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">98</div><div class="menu-dish"><div class="menu-name">Chicken Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">99</div><div class="menu-dish"><div class="menu-name">Beef Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">100</div><div class="menu-dish"><div class="menu-name">Shrimp Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">101</div><div class="menu-dish"><div class="menu-name">Combination Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">101a</div><div class="menu-dish"><div class="menu-name">Young Chow Fried Rice</div><div class="menu-note">White rice base</div></div><div class="menu-price">$10.75</div></div>
+
+                <h3 class="cat-heading">Vegetables</h3>
+                <div class="menu-row"><div class="menu-num">V01</div><div class="menu-dish"><div class="menu-name">String Beans Szechuan Style</div></div><div class="menu-price">$10.45</div></div>
+                <div class="menu-row"><div class="menu-num">V02</div><div class="menu-dish"><div class="menu-name">Broccoli in Garlic Sauce</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">V03</div><div class="menu-dish"><div class="menu-name">Sauteed Mixed Vegetable</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">V04</div><div class="menu-dish"><div class="menu-name">Ma Po Bean Curd</div></div><div class="menu-price">$9.45</div></div>
+                <div class="menu-row"><div class="menu-num">V05</div><div class="menu-dish"><div class="menu-name">Bean Curd Home Style</div></div><div class="menu-price">$9.45</div></div>
+                <div class="menu-row"><div class="menu-num">V06</div><div class="menu-dish"><div class="menu-name">Bean Curd with General Tso's Sauce</div></div><div class="menu-price">$9.95</div></div>
+                <div class="menu-row"><div class="menu-num">V07</div><div class="menu-dish"><div class="menu-name">Eggplant with Garlic Sauce</div></div><div class="menu-price">$10.45</div></div>
+                <div class="menu-row"><div class="menu-num">V08</div><div class="menu-dish"><div class="menu-name">Moo Shu Vegetable</div></div><div class="menu-price">$10.95</div></div>
+                <div class="menu-row"><div class="menu-num">V09</div><div class="menu-dish"><div class="menu-name">Kung Pao Bean Curd</div></div><div class="menu-price">$9.95</div></div>
+
+                <h3 class="cat-heading">Chef's Specials</h3>
+                <div class="menu-row"><div class="menu-num">C1</div><div class="menu-dish"><div class="menu-name">Orange Chicken</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C2</div><div class="menu-dish"><div class="menu-name">General Tso's Chicken</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C3</div><div class="menu-dish"><div class="menu-name">Sesame Chicken</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C4</div><div class="menu-dish"><div class="menu-name">Crispy Shrimp</div></div><div class="menu-price">$13.95</div></div>
+                <div class="menu-row"><div class="menu-num">C5</div><div class="menu-dish"><div class="menu-name">General Tso's Shrimp</div></div><div class="menu-price">$13.45</div></div>
+                <div class="menu-row"><div class="menu-num">C6</div><div class="menu-dish"><div class="menu-name">Seafood Combination</div></div><div class="menu-price">$16.95</div></div>
+                <div class="menu-row"><div class="menu-num">C7</div><div class="menu-dish"><div class="menu-name">Kung Pao Two Kinds</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C8</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Combo</div></div><div class="menu-price">$13.45</div></div>
+                <div class="menu-row"><div class="menu-num">C9</div><div class="menu-dish"><div class="menu-name">Hunan Twins</div><div class="menu-note">Shrimp &amp; Chicken</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C10</div><div class="menu-dish"><div class="menu-name">Shrimp &amp; Scallop with Garlic Sauce</div></div><div class="menu-price">$16.95</div></div>
+                <div class="menu-row"><div class="menu-num">C11</div><div class="menu-dish"><div class="menu-name">Szechuan Crispy Beef</div></div><div class="menu-price">$14.95</div></div>
+                <div class="menu-row"><div class="menu-num">C12</div><div class="menu-dish"><div class="menu-name">Szechuan Crispy Chicken</div></div><div class="menu-price">$14.95</div></div>
+                <div class="menu-row"><div class="menu-num">C13</div><div class="menu-dish"><div class="menu-name">Triple Delight</div></div><div class="menu-price">$13.45</div></div>
+                <div class="menu-row"><div class="menu-num">C14</div><div class="menu-dish"><div class="menu-name">Happy Family</div></div><div class="menu-price">$14.45</div></div>
+
+                <h3 class="cat-heading">Lunch Specials</h3>
+                <div class="menu-row"><div class="menu-num">L1</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Pork</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L2</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L3</div><div class="menu-dish"><div class="menu-name">Chicken Fried Rice</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L3</div><div class="menu-dish"><div class="menu-name">Beef Fried Rice</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L3</div><div class="menu-dish"><div class="menu-name">Shrimp Fried Rice</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L3</div><div class="menu-dish"><div class="menu-name">Pork Fried Rice</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L4</div><div class="menu-dish"><div class="menu-name">Kung Pao Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L5</div><div class="menu-dish"><div class="menu-name">Moo Goo Gai Pan</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L6</div><div class="menu-dish"><div class="menu-name">Chicken with Garlic Sauce</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L7</div><div class="menu-dish"><div class="menu-name">Chicken with Mixed Vegetable</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L8</div><div class="menu-dish"><div class="menu-name">Chicken with Broccoli</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L9</div><div class="menu-dish"><div class="menu-name">Hunan Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L10</div><div class="menu-dish"><div class="menu-name">Chicken Szechuan Style</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L11</div><div class="menu-dish"><div class="menu-name">General Tso's Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L12</div><div class="menu-dish"><div class="menu-name">Sesame Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L13</div><div class="menu-dish"><div class="menu-name">Beef with Green Pepper</div></div><div class="menu-price">$8.55</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPETIZERS -->
+    <div class="menu-panel" data-panel="appetizers">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row">
+                    <div class="menu-num">01</div>
+                    <div class="menu-dish"><div class="menu-name">Egg Roll</div><div class="menu-note">Single serving</div></div>
+                    <div class="menu-price">$1.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">02</div>
+                    <div class="menu-dish"><div class="menu-name">Vegetable Spring Roll</div><div class="menu-note">Single serving</div></div>
+                    <div class="menu-price">$1.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">03</div>
+                    <div class="menu-dish"><div class="menu-name">Shrimp Tempura</div><div class="menu-note">5 pieces</div></div>
+                    <div class="menu-price">$6.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">04</div>
+                    <div class="menu-dish"><div class="menu-name">Fried Wonton</div><div class="menu-note">6 pieces</div></div>
+                    <div class="menu-price">$5.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">05</div>
+                    <div class="menu-dish"><div class="menu-name">Crab Rangoon</div><div class="menu-note">6 pieces</div></div>
+                    <div class="menu-price">$6.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">06</div>
+                    <div class="menu-dish"><div class="menu-name">BBQ Spare Ribs</div><div class="menu-note">4 pieces</div></div>
+                    <div class="menu-price">$8.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">07</div>
+                    <div class="menu-dish"><div class="menu-name">BBQ Roast Pork</div></div>
+                    <div class="menu-price">$7.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">08</div>
+                    <div class="menu-dish"><div class="menu-name">Beef on the Sticks</div><div class="menu-note">4 pieces</div></div>
+                    <div class="menu-price">$7.95</div>
+                </div>
+            </div>
+            <div>
+                <div class="menu-row">
+                    <div class="menu-num">08</div>
+                    <div class="menu-dish"><div class="menu-name">Chicken on the Sticks</div><div class="menu-note">4 pieces</div></div>
+                    <div class="menu-price">$7.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">09</div>
+                    <div class="menu-dish"><div class="menu-name">Steamed Meat Dumplings</div><div class="menu-note">8 pieces</div></div>
+                    <div class="menu-price">$7.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">09</div>
+                    <div class="menu-dish"><div class="menu-name">Pan Fried Meat Dumplings</div><div class="menu-note">8 pieces</div></div>
+                    <div class="menu-price">$7.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">10</div>
+                    <div class="menu-dish"><div class="menu-name">Pu Pu Platter</div><div class="menu-note">For 2 · sampler feast</div></div>
+                    <div class="menu-price">$12.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">11</div>
+                    <div class="menu-dish"><div class="menu-name">Steamed Chicken Dumplings</div><div class="menu-note">6 pieces</div></div>
+                    <div class="menu-price">$6.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">11</div>
+                    <div class="menu-dish"><div class="menu-name">Fried Chicken Dumplings</div><div class="menu-note">6 pieces</div></div>
+                    <div class="menu-price">$6.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">12</div>
+                    <div class="menu-dish"><div class="menu-name">Shrimp Toast</div><div class="menu-note">4 pieces</div></div>
+                    <div class="menu-price">$6.45</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">13</div>
+                    <div class="menu-dish"><div class="menu-name">French Fries</div></div>
+                    <div class="menu-price">$3.29</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOUP -->
+    <div class="menu-panel" data-panel="soup">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row">
+                    <div class="menu-num">21</div>
+                    <div class="menu-dish"><div class="menu-name">Wonton Soup</div></div>
+                    <div class="menu-price">$2.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">22</div>
+                    <div class="menu-dish"><div class="menu-name">Egg Drop Soup</div></div>
+                    <div class="menu-price">$2.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">23</div>
+                    <div class="menu-dish"><div class="menu-name">Hot &amp; Sour Soup</div></div>
+                    <div class="menu-price">$2.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">24</div>
+                    <div class="menu-dish"><div class="menu-name">Chicken with Corn Soup</div></div>
+                    <div class="menu-price">$6.95</div>
+                </div>
+            </div>
+            <div>
+                <div class="menu-row">
+                    <div class="menu-num">25</div>
+                    <div class="menu-dish"><div class="menu-name">Vegetable Soup</div></div>
+                    <div class="menu-price">$6.45</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">26</div>
+                    <div class="menu-dish"><div class="menu-name">Seafood Soup</div></div>
+                    <div class="menu-price">$8.95</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">27</div>
+                    <div class="menu-dish"><div class="menu-name">Triple Delight Soup</div></div>
+                    <div class="menu-price">$8.45</div>
+                </div>
+                <div class="menu-row">
+                    <div class="menu-num">28</div>
+                    <div class="menu-dish"><div class="menu-name">Noodle Soup</div></div>
+                    <div class="menu-price">$8.45</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHICKEN -->
+    <div class="menu-panel" data-panel="chicken">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row"><div class="menu-num">30</div><div class="menu-dish"><div class="menu-name">Chicken with Broccoli</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">31</div><div class="menu-dish"><div class="menu-name">Chicken with Mixed Vegetable</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">32</div><div class="menu-dish"><div class="menu-name">Chicken with Garlic Sauce</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">33</div><div class="menu-dish"><div class="menu-name">Chicken with Snow Peas</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">34</div><div class="menu-dish"><div class="menu-name">Chicken with Cashew Nuts</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">35</div><div class="menu-dish"><div class="menu-name">Chicken with Black Bean Sauce</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">36</div><div class="menu-dish"><div class="menu-name">Hunan Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">37</div><div class="menu-dish"><div class="menu-name">Szechuan Chicken</div></div><div class="menu-price">$11.49</div></div>
+            </div>
+            <div>
+                <div class="menu-row"><div class="menu-num">38</div><div class="menu-dish"><div class="menu-name">Kung Pao Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">39</div><div class="menu-dish"><div class="menu-name">Moo Goo Gai Pan</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">40</div><div class="menu-dish"><div class="menu-name">Chicken with String Beans</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">41</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">42</div><div class="menu-dish"><div class="menu-name">Lemon Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">43</div><div class="menu-dish"><div class="menu-name">Curry Chicken</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">44</div><div class="menu-dish"><div class="menu-name">Moo Shu Chicken</div></div><div class="menu-price">$12.49</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PORK -->
+    <div class="menu-panel" data-panel="pork">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row"><div class="menu-num">45</div><div class="menu-dish"><div class="menu-name">Roast Pork with Broccoli</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">46</div><div class="menu-dish"><div class="menu-name">Roast Pork with Mixed Vegetable</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">47</div><div class="menu-dish"><div class="menu-name">Shredded Pork with Garlic Sauce</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">48</div><div class="menu-dish"><div class="menu-name">Roast Pork with Snow Peas</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">49</div><div class="menu-dish"><div class="menu-name">Hunan Pork</div></div><div class="menu-price">$11.49</div></div>
+            </div>
+            <div>
+                <div class="menu-row"><div class="menu-num">50</div><div class="menu-dish"><div class="menu-name">Twice Cooked Pork</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">51</div><div class="menu-dish"><div class="menu-name">Pork with String Beans</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">52</div><div class="menu-dish"><div class="menu-name">Sweet and Sour Pork</div></div><div class="menu-price">$11.49</div></div>
+                <div class="menu-row"><div class="menu-num">53</div><div class="menu-dish"><div class="menu-name">Moo Shu Pork</div></div><div class="menu-price">$12.49</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BEEF -->
+    <div class="menu-panel" data-panel="beef">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row"><div class="menu-num">54</div><div class="menu-dish"><div class="menu-name">Beef with Broccoli</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">55</div><div class="menu-dish"><div class="menu-name">Beef with Mixed Vegetables</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">56</div><div class="menu-dish"><div class="menu-name">Beef with Garlic Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">57</div><div class="menu-dish"><div class="menu-name">Beef with Snow Peas</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">58</div><div class="menu-dish"><div class="menu-name">Hunan Beef</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">59</div><div class="menu-dish"><div class="menu-name">Beef with String Bean</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">60</div><div class="menu-dish"><div class="menu-name">Beef with Oyster Sauce</div></div><div class="menu-price">$12.95</div></div>
+            </div>
+            <div>
+                <div class="menu-row"><div class="menu-num">61</div><div class="menu-dish"><div class="menu-name">Beef Szechuan Style</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">62</div><div class="menu-dish"><div class="menu-name">Kung Pao Beef</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">63</div><div class="menu-dish"><div class="menu-name">Pepper Steak with Onion</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">64</div><div class="menu-dish"><div class="menu-name">Mongolian Beef</div></div><div class="menu-price">$13.45</div></div>
+                <div class="menu-row"><div class="menu-num">65</div><div class="menu-dish"><div class="menu-name">Beef with Black Bean Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">66</div><div class="menu-dish"><div class="menu-name">Curry Beef</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">67</div><div class="menu-dish"><div class="menu-name">Moo Shu Beef</div></div><div class="menu-price">$13.95</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEAFOOD -->
+    <div class="menu-panel" data-panel="seafood">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row"><div class="menu-num">68</div><div class="menu-dish"><div class="menu-name">Shrimp with Broccoli</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">69</div><div class="menu-dish"><div class="menu-name">Shrimp with Mixed Vegetable</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">70</div><div class="menu-dish"><div class="menu-name">Shrimp with Garlic Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">71</div><div class="menu-dish"><div class="menu-name">Shrimp with Snow Peas</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">72</div><div class="menu-dish"><div class="menu-name">Hunan Shrimp</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">73</div><div class="menu-dish"><div class="menu-name">Shrimp with String Bean</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">74</div><div class="menu-dish"><div class="menu-name">Kung Pao Shrimp</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">75</div><div class="menu-dish"><div class="menu-name">Shrimp with Lobster Sauce</div></div><div class="menu-price">$12.95</div></div>
+            </div>
+            <div>
+                <div class="menu-row"><div class="menu-num">76</div><div class="menu-dish"><div class="menu-name">Shrimp with Cashew Nuts</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">77</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Shrimp</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">78</div><div class="menu-dish"><div class="menu-name">Shrimp with Black Bean Sauce</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">79</div><div class="menu-dish"><div class="menu-name">Shrimp Szechuan Style</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">80</div><div class="menu-dish"><div class="menu-name">Curry Shrimp</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">81</div><div class="menu-dish"><div class="menu-name">Moo Shu Shrimp</div></div><div class="menu-price">$13.95</div></div>
+                <div class="menu-row"><div class="menu-num">82</div><div class="menu-dish"><div class="menu-name">Kung Pao Scallops</div></div><div class="menu-price">$16.95</div></div>
+                <div class="menu-row"><div class="menu-num">83</div><div class="menu-dish"><div class="menu-name">Scallops with Garlic Sauce</div></div><div class="menu-price">$16.95</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOODLES & RICE -->
+    <div class="menu-panel" data-panel="noodles">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row"><div class="menu-num">87</div><div class="menu-dish"><div class="menu-name">Vegetable Lo Mein</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">88</div><div class="menu-dish"><div class="menu-name">Roast Pork Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">89</div><div class="menu-dish"><div class="menu-name">Chicken Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">90</div><div class="menu-dish"><div class="menu-name">Beef Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">91</div><div class="menu-dish"><div class="menu-name">Shrimp Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">92</div><div class="menu-dish"><div class="menu-name">Combination Lo Mein</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">93</div><div class="menu-dish"><div class="menu-name">Chow Fun</div></div><div class="menu-price">$10.75</div></div>
+                <div class="menu-row"><div class="menu-num">94</div><div class="menu-dish"><div class="menu-name">Rice Noodle</div></div><div class="menu-price">$10.75</div></div>
+                <div class="menu-row"><div class="menu-num">95</div><div class="menu-dish"><div class="menu-name">Singapore Style Noodle</div><div class="menu-note">with mild curry</div></div><div class="menu-price">$10.75</div></div>
+            </div>
+            <div>
+                <div class="menu-row"><div class="menu-num">96</div><div class="menu-dish"><div class="menu-name">Vegetable Fried Rice</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">97</div><div class="menu-dish"><div class="menu-name">Roast Pork Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">98</div><div class="menu-dish"><div class="menu-name">Chicken Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">99</div><div class="menu-dish"><div class="menu-name">Beef Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">100</div><div class="menu-dish"><div class="menu-name">Shrimp Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">101</div><div class="menu-dish"><div class="menu-name">Combination Fried Rice</div></div><div class="menu-price">$10.25</div></div>
+                <div class="menu-row"><div class="menu-num">101a</div><div class="menu-dish"><div class="menu-name">Young Chow Fried Rice</div><div class="menu-note">White rice base</div></div><div class="menu-price">$10.75</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VEGETABLES -->
+    <div class="menu-panel" data-panel="vegetables">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row"><div class="menu-num">V01</div><div class="menu-dish"><div class="menu-name">String Beans Szechuan Style</div></div><div class="menu-price">$10.45</div></div>
+                <div class="menu-row"><div class="menu-num">V02</div><div class="menu-dish"><div class="menu-name">Broccoli in Garlic Sauce</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">V03</div><div class="menu-dish"><div class="menu-name">Sauteed Mixed Vegetable</div></div><div class="menu-price">$8.95</div></div>
+                <div class="menu-row"><div class="menu-num">V04</div><div class="menu-dish"><div class="menu-name">Ma Po Bean Curd</div></div><div class="menu-price">$9.45</div></div>
+                <div class="menu-row"><div class="menu-num">V05</div><div class="menu-dish"><div class="menu-name">Bean Curd Home Style</div></div><div class="menu-price">$9.45</div></div>
+            </div>
+            <div>
+                <div class="menu-row"><div class="menu-num">V06</div><div class="menu-dish"><div class="menu-name">Bean Curd with General Tso's Sauce</div></div><div class="menu-price">$9.95</div></div>
+                <div class="menu-row"><div class="menu-num">V07</div><div class="menu-dish"><div class="menu-name">Eggplant with Garlic Sauce</div></div><div class="menu-price">$10.45</div></div>
+                <div class="menu-row"><div class="menu-num">V08</div><div class="menu-dish"><div class="menu-name">Moo Shu Vegetable</div></div><div class="menu-price">$10.95</div></div>
+                <div class="menu-row"><div class="menu-num">V09</div><div class="menu-dish"><div class="menu-name">Kung Pao Bean Curd</div></div><div class="menu-price">$9.95</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHEF'S SPECIALS -->
+    <div class="menu-panel" data-panel="specials">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row"><div class="menu-num">C1</div><div class="menu-dish"><div class="menu-name">Orange Chicken</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C2</div><div class="menu-dish"><div class="menu-name">General Tso's Chicken</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C3</div><div class="menu-dish"><div class="menu-name">Sesame Chicken</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C4</div><div class="menu-dish"><div class="menu-name">Crispy Shrimp</div></div><div class="menu-price">$13.95</div></div>
+                <div class="menu-row"><div class="menu-num">C5</div><div class="menu-dish"><div class="menu-name">General Tso's Shrimp</div></div><div class="menu-price">$13.45</div></div>
+                <div class="menu-row"><div class="menu-num">C6</div><div class="menu-dish"><div class="menu-name">Seafood Combination</div></div><div class="menu-price">$16.95</div></div>
+                <div class="menu-row"><div class="menu-num">C7</div><div class="menu-dish"><div class="menu-name">Kung Pao Two Kinds</div></div><div class="menu-price">$12.95</div></div>
+            </div>
+            <div>
+                <div class="menu-row"><div class="menu-num">C8</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Combo</div></div><div class="menu-price">$13.45</div></div>
+                <div class="menu-row"><div class="menu-num">C9</div><div class="menu-dish"><div class="menu-name">Hunan Twins</div><div class="menu-note">Shrimp &amp; Chicken</div></div><div class="menu-price">$12.95</div></div>
+                <div class="menu-row"><div class="menu-num">C10</div><div class="menu-dish"><div class="menu-name">Shrimp &amp; Scallop with Garlic Sauce</div></div><div class="menu-price">$16.95</div></div>
+                <div class="menu-row"><div class="menu-num">C11</div><div class="menu-dish"><div class="menu-name">Szechuan Crispy Beef</div></div><div class="menu-price">$14.95</div></div>
+                <div class="menu-row"><div class="menu-num">C12</div><div class="menu-dish"><div class="menu-name">Szechuan Crispy Chicken</div></div><div class="menu-price">$14.95</div></div>
+                <div class="menu-row"><div class="menu-num">C13</div><div class="menu-dish"><div class="menu-name">Triple Delight</div></div><div class="menu-price">$13.45</div></div>
+                <div class="menu-row"><div class="menu-num">C14</div><div class="menu-dish"><div class="menu-name">Happy Family</div></div><div class="menu-price">$14.45</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LUNCH SPECIALS -->
+    <div class="menu-panel" data-panel="lunch">
+        <div class="menu-columns">
+            <div>
+                <div class="menu-row"><div class="menu-num">L1</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Pork</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L2</div><div class="menu-dish"><div class="menu-name">Sweet &amp; Sour Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L3</div><div class="menu-dish"><div class="menu-name">Chicken Fried Rice</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L3</div><div class="menu-dish"><div class="menu-name">Beef Fried Rice</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L3</div><div class="menu-dish"><div class="menu-name">Shrimp Fried Rice</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L3</div><div class="menu-dish"><div class="menu-name">Pork Fried Rice</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L4</div><div class="menu-dish"><div class="menu-name">Kung Pao Chicken</div></div><div class="menu-price">$8.55</div></div>
+            </div>
+            <div>
+                <div class="menu-row"><div class="menu-num">L5</div><div class="menu-dish"><div class="menu-name">Moo Goo Gai Pan</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L6</div><div class="menu-dish"><div class="menu-name">Chicken with Garlic Sauce</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L7</div><div class="menu-dish"><div class="menu-name">Chicken with Mixed Vegetable</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L8</div><div class="menu-dish"><div class="menu-name">Chicken with Broccoli</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L9</div><div class="menu-dish"><div class="menu-name">Hunan Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L10</div><div class="menu-dish"><div class="menu-name">Chicken Szechuan Style</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L11</div><div class="menu-dish"><div class="menu-name">General Tso's Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L12</div><div class="menu-dish"><div class="menu-name">Sesame Chicken</div></div><div class="menu-price">$8.55</div></div>
+                <div class="menu-row"><div class="menu-num">L13</div><div class="menu-dish"><div class="menu-name">Beef with Green Pepper</div></div><div class="menu-price">$8.55</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-foot reveal">
+        <p class="menu-foot-text">All dishes served with steamed rice. Prices and availability subject to change.</p>
+        <a href="#" class="btn-red">Book a Table</a>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer id="contact">
+    <div class="footer-top">
+        <div>
+            <div class="foot-brand">陈阿美的餐馆</div>
+            <div class="foot-brand-en">May's Restaurant</div>
+            <p class="foot-desc">
+                Authentic Chinese cuisine crafted with fresh ingredients
+                and traditional family recipes. Your taste of China, right here.
+            </p>
+        </div>
+        <div>
+            <div class="foot-h">Menu</div>
+            <ul class="foot-list">
+                <li><a href="#">Appetizers</a></li>
+                <li><a href="#">Chef's Specialties</a></li>
+                <li><a href="#">Lunch Specials</a></li>
+                <li><a href="#">Vegetarian</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="foot-h">Visit Us</div>
+            <ul class="foot-list">
+                <li><a href="#">Monday – Sunday</a></li>
+                <li><a href="#">11:00 am – 10:00 pm</a></li>
+                <li><a href="#">Dine In · Takeout</a></li>
+                <li><a href="#">Delivery Available</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="foot-h">Contact</div>
+            <ul class="foot-list">
+                <li><a href="#">Call to Order</a></li>
+                <li><a href="#">Reserve a Table</a></li>
+                <li><a href="#">Find Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="foot-bot">
+        <span class="foot-copy">© 2026 陈阿美的餐馆 · May's Restaurant. All rights reserved.</span>
+        <span class="foot-red">阿美 · Est. 1998</span>
+    </div>
+</footer>
+
+<script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Menu tabs
+    const tabs   = document.querySelectorAll('.menu-tab');
+    const panels = document.querySelectorAll('.menu-panel');
+    tabs.forEach(t => t.addEventListener('click', () => {
+        tabs.forEach(x => x.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        t.classList.add('active');
+        document.querySelector(`.menu-panel[data-panel="${t.dataset.tab}"]`)?.classList.add('active');
+    }));
+
+    // Scroll reveal
+    const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
