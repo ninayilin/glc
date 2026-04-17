@@ -474,6 +474,217 @@ nav.scrolled {
 }
 
 /* ─────────────────────────────────────────
+   LOCATION
+───────────────────────────────────────── */
+.location {
+    background: var(--ivory-0);
+    color: var(--ink);
+    padding: 80px 48px 100px;
+    border-top: 1px solid var(--line-light);
+}
+
+.loc-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.loc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+}
+
+.loc-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    align-items: stretch;
+}
+
+.loc-map {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 500px;
+    box-shadow: 0 4px 18px rgba(26,20,16,0.08);
+    border: 1px solid var(--line-light);
+}
+
+.loc-map iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    border: 0;
+    display: block;
+}
+
+.loc-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 4px;
+}
+
+.loc-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    margin-bottom: 4px;
+}
+
+.loc-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.loc-open {
+    background: #D4F7DE;
+    color: #0E7A2E;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+}
+
+.loc-close {
+    color: var(--red);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.loc-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    color: #1268C3;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+}
+
+.loc-link:hover { color: var(--red); }
+
+.loc-ico {
+    font-size: 14px;
+    opacity: 0.8;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Pickup / Delivery toggle */
+.loc-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #ECE6D8;
+    border-radius: 999px;
+    padding: 6px;
+    gap: 4px;
+    margin-top: 10px;
+}
+
+.loc-tab {
+    border: none;
+    background: transparent;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-60);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.loc-tab.active {
+    background: var(--ink);
+    color: #FFFFFF;
+}
+
+/* Hours card */
+.loc-hours {
+    background: #ECE6D8;
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-top: 10px;
+}
+
+.loc-hours-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+}
+
+.loc-hours-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid rgba(26,20,16,0.12);
+    font-size: 14.5px;
+    color: var(--ink);
+}
+
+.loc-closed {
+    background: #FADCDD;
+    color: #9A141D;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.loc-time {
+    color: var(--ink-60);
+    font-weight: 500;
+}
+
+/* CTA row */
+.loc-cta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.loc-cta .btn-red {
+    text-align: center;
+    padding: 16px 24px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--red);
+    border: 2px solid var(--red);
+}
+
+.btn-outline:hover {
+    background: var(--red);
+    color: #fff;
+}
+
+@media (max-width: 960px) {
+    .location { padding: 60px 24px 72px; }
+    .loc-grid { grid-template-columns: 1fr; gap: 28px; }
+    .loc-map, .loc-map iframe { min-height: 380px; }
+    .loc-cta { grid-template-columns: 1fr; }
+}
+
+/* ─────────────────────────────────────────
    MENU — IVORY (menu.html page)
 ───────────────────────────────────────── */
 .menu {

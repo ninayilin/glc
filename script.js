@@ -16,6 +16,14 @@ tabs.forEach(t => t.addEventListener('click', () => {
     document.querySelector(`.menu-panel[data-panel="${t.dataset.tab}"]`)?.classList.add('active');
 }));
 
+// Location: Pickup / Delivery toggle
+const locTabs = document.querySelectorAll('.loc-tab');
+locTabs.forEach(btn => btn.addEventListener('click', () => {
+    locTabs.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+}));
+
 // Scroll reveal
 const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
