@@ -403,35 +403,22 @@ nav.scrolled {
 
 .dish-card[data-has-image="true"] .dish-image::after { display: none; }
 
-/* Price tag — sits in the top-right corner of each dish image */
-.price-tag {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    z-index: 5;
-    background: var(--red);
-    color: #fff;
+/* Dish-name + price row (inline, name-leader-price style) */
+.dish-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.dish-price {
     font-family: 'Playfair Display', serif;
     font-size: 18px;
     font-weight: 700;
-    letter-spacing: 0.02em;
-    padding: 10px 16px 10px 26px;
-    border-radius: 4px 999px 999px 4px;
-    box-shadow: 0 8px 22px rgba(196, 30, 42, 0.45), 0 0 0 2px rgba(255,255,255,0.9);
-    line-height: 1;
-}
-
-.price-tag::before {
-    content: '';
-    position: absolute;
-    left: 8px;
-    top: 50%;
-    width: 6px;
-    height: 6px;
-    background: #fff;
-    border-radius: 50%;
-    transform: translateY(-50%);
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.35);
+    color: var(--ink);
+    white-space: nowrap;
+    letter-spacing: -0.005em;
 }
 
 .dish-body {
@@ -439,10 +426,22 @@ nav.scrolled {
 }
 
 .dish-stars {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.dish-stars .stars {
     color: var(--gold);
     font-size: 13px;
     letter-spacing: 2px;
-    margin-bottom: 10px;
+}
+
+.dish-stars .review-count {
+    font-size: 12px;
+    color: var(--ink-60);
+    letter-spacing: 0.01em;
 }
 
 .dish-name {
@@ -450,8 +449,9 @@ nav.scrolled {
     font-size: 22px;
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 8px;
     letter-spacing: -0.01em;
+    flex: 1;
+    min-width: 0;
 }
 
 .dish-desc {
